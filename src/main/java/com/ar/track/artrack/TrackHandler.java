@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Collection;
 
+import com.ar.track.artrack.vo.Position;
 import com.nlink.FrameEventListener;
 import com.nlink.NLink;
 import com.nlink.NLinkReader;
@@ -22,6 +23,11 @@ public class TrackHandler implements ApplicationRunner {
     @Value("${nlink.com}")
     private String com;
 
+    @Value("${position.angle}")
+    private float angle;
+
+    public static Position position = new Position();
+
     @Override
     public void run(ApplicationArguments args) throws Exception {
         // 实例化串口操作类对象,串口号，波特率，数据位，停止位，校验位
@@ -38,7 +44,13 @@ public class TrackHandler implements ApplicationRunner {
             @Override
             public void onArrival(Frame frame) {
                 AnchorFrame0 anch = (AnchorFrame0) frame;
-                System.out.println(LocalDateTime.now() + " " + Arrays.toString(anch.getTags().get(0).getPostion()));
+                float[] p = anch.getTags().get(0).getPostion();
+                position.setX(p[0]);
+                position.setY(p[1]);
+                position.setZ(p[2]);
+                position.setAngle(angle);
+                //System.out.println(LocalDateTime.now() + " " + Arrays.toString(anch.getTags().get(0).getPostion()));
+                //System.out.println(LocalDateTime.now() + " " + position[0] + ", " + position[1] + ", " + position[2]);
             }
 
             @Override
@@ -49,14 +61,10 @@ public class TrackHandler implements ApplicationRunner {
 
         // 开始,打开串口，开始监听读取串口数据
         manager.start();
-        /** 
-        int i = 10000;
-        while (i-- > 0) {
-            TimeUnit.SECONDS.sleep(3);
-        }
-        // 结束，关闭串口，停止监听串口数据
-        manager.stop();
-        */
+        /**
+         * int i = 10000; while (i-- > 0) { TimeUnit.SECONDS.sleep(3); } //
+         * 结束，关闭串口，停止监听串口数据 manager.stop();
+         */
 
     }
 
