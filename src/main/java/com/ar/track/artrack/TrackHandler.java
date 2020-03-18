@@ -1,7 +1,5 @@
 package com.ar.track.artrack;
 
-import java.time.LocalDateTime;
-import java.util.Arrays;
 import java.util.Collection;
 
 import com.ar.track.artrack.vo.Position;
