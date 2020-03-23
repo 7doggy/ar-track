@@ -1,7 +1,7 @@
 package com.ar.track.artrack.controller;
 
 import com.ar.track.artrack.TrackHandler;
-import com.ar.track.artrack.vo.Position;
+import com.ar.track.artrack.vo.PositionVO;
 import com.ar.track.artrack.vo.ResponseVO;
 
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,7 +12,7 @@ public class PositionController {
 
     @GetMapping("/getposition")
     public ResponseVO getPosition() {
-        Position position = TrackHandler.position;
+        PositionVO position = TrackHandler.position;
         ResponseVO responseVO = new ResponseVO();
         responseVO.setSuccess(1);
         responseVO.setCode("");
